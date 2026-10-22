@@ -1,0 +1,102 @@
+{
+  "Settings": {
+    "NombreProceso": {
+      "Valor": "ConsultaCuentas",
+      "Descripcion": "Nombre del proceso en el log y en los archivos de salida."
+    },
+    "ArchivoEntrada": {
+      "Valor": "Funcional/Input/cuentas.csv",
+      "Descripcion": "CSV que entrega la clínica. Ruta relativa a la raíz del proyecto (la carpeta que contiene Configuracion)."
+    },
+    "ColumnaReferencia": {
+      "Valor": "id_cuenta",
+      "Descripcion": "Columna del CSV con el número de cuenta."
+    },
+    "CarpetaOutput": {
+      "Valor": "Funcional/Output",
+      "Descripcion": "Carpeta del Excel diario."
+    },
+    "PrefijoOutput": {
+      "Valor": "resultado_cuentas",
+      "Descripcion": "Inicio del nombre del Excel; se completa con la fecha del lote (resultado_cuentas_2026-10-22.xlsx)."
+    },
+    "CarpetaCola": {
+      "Valor": "Funcional/Cola",
+      "Descripcion": "Carpeta del estado de cada id (lo resuelto y lo pendiente)."
+    },
+    "CarpetaLogs": {
+      "Valor": "Funcional/Logs",
+      "Descripcion": "Carpeta del log diario."
+    },
+    "NivelLog": {
+      "Valor": "INFO",
+      "Descripcion": "Nivel mínimo del log: DEBUG, INFO, WARNING o ERROR."
+    },
+    "ApiUrlBase": {
+      "Valor": "https://jsonplaceholder.typicode.com",
+      "Descripcion": "Dirección del sistema externo."
+    },
+    "ApiRutaConsulta": {
+      "Valor": "/posts/{id}",
+      "Descripcion": "Ruta de la consulta; {id} se reemplaza por el número de cuenta."
+    },
+    "ApiTimeoutSegundos": {
+      "Valor": 10,
+      "Descripcion": "Tiempo máximo de espera de cada consulta."
+    },
+    "MaxIntentos": {
+      "Valor": 4,
+      "Descripcion": "Intentos en total por id ante un error técnico reintentable (1 + 3 reintentos)."
+    },
+    "EsperaInicialSegundos": {
+      "Valor": 1,
+      "Descripcion": "Espera antes del primer reintento."
+    },
+    "FactorEspera": {
+      "Valor": 2,
+      "Descripcion": "Multiplicador de la espera entre reintentos (1, 2, 4 s)."
+    },
+    "EsperaMaximaSegundos": {
+      "Valor": 30,
+      "Descripcion": "Tope de cualquier espera, incluido el Retry-After que mande el sistema."
+    },
+    "CodigosReintentables": {
+      "Valor": [408, 429, 500, 502, 503, 504],
+      "Descripcion": "Códigos HTTP que se reintentan. El 404 y los demás 4xx no se reintentan."
+    },
+    "MaxConsecutiveSystemExceptions": {
+      "Valor": 3,
+      "Descripcion": "Errores de sistema seguidos tras los que se dejan de consultar los ids restantes (la API está caída)."
+    }
+  },
+  "Constants": {
+    "EstadoExitoso": {
+      "Valor": "Exitoso",
+      "Descripcion": "Estado de una cuenta encontrada."
+    },
+    "EstadoNegocio": {
+      "Valor": "Regla de Negocio",
+      "Descripcion": "Estado de un resultado de negocio: no existe o dato inválido. No se reintenta."
+    },
+    "EstadoSistema": {
+      "Valor": "Error de Sistema",
+      "Descripcion": "Estado de un error técnico tras agotar los reintentos. Se vuelve a intentar en la siguiente ejecución."
+    },
+    "Observaciones": {
+      "Valor": {
+        "CUENTA_ENCONTRADA": "Cuenta encontrada.",
+        "CUENTA_NO_EXISTE": "La cuenta no existe en el sistema.",
+        "VALOR_NO_NUMERICO": "El valor no es un número de cuenta.",
+        "LINEA_VACIA": "La línea está vacía.",
+        "CUENTA_FUERA_DE_RANGO": "El número de cuenta debe ser mayor que cero.",
+        "TIMEOUT": "El sistema no respondió a tiempo; se agotaron los reintentos.",
+        "SIN_CONEXION": "No hubo conexión con el sistema; se agotaron los reintentos.",
+        "ERROR_HTTP": "El sistema respondió con error; se agotaron los reintentos.",
+        "RESPUESTA_INESPERADA": "Respuesta inesperada del sistema.",
+        "ERROR_INTERNO": "Error interno del proceso; revisar el log.",
+        "PENDIENTE_POR_CORTE": "No se consultó porque el sistema estaba caído; se intentará en la siguiente ejecución."
+      },
+      "Descripcion": "Catálogo de observaciones (D2). El código lo usa el programa y el log; el texto va al Excel."
+    }
+  }
+}

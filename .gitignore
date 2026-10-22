@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Salidas que genera el proceso al correr (se conserva solo la carpeta)
+Funcional/Output/*
+Funcional/Cola/*
+Funcional/Logs/*
+!Funcional/Output/.gitkeep
+!Funcional/Cola/.gitkeep
+!Funcional/Logs/.gitkeep
+
+# Temporales de escritura atómica
+*.tmp
+~tmp_*
